@@ -27,9 +27,9 @@ namespace SoccerStats
             }
         }
 
-        public static List<String[]> ReadSoccerResults(String fileName)
+        public static List<GameResult> ReadSoccerResults(String fileName)
         {
-            var SoccerResults = new List<String[]>();
+            var SoccerResults = new List<GameResult>();
             using (var reader = new StreamReader(fileName))
             {
                 string line = "";
@@ -44,9 +44,38 @@ namespace SoccerStats
                         gameResult.GameDate = DateTime.Parse(values[0], new CultureInfo("en-US"));
                     }
                     catch { }
+                    gameResult.TeamName = values[1];
+                    HomeOrAway homeOrAway;
+                    if (Enum.TryParse(values[2], out homeOrAway))
+                    {
+                        gameResult.HomeOrAway = homeOrAway;
+                    }
 
-                    Console.WriteLine(gameResult.GameDate);
-                    SoccerResults.Add(values);
+                    int parseInt;
+                    if (int.TryParse(values[3], out parseInt))
+                    {
+                        gameResult.Goals = parseInt;
+                    }
+                    if (int.TryParse(values[4], out parseInt))
+                    {
+                        gameResult.GoalAttempts = parseInt;
+                    }
+                    if (int.TryParse(values[5], out parseInt))
+                    {
+                        gameResult.ShotsOnGoal = parseInt;
+                    }
+                    if (int.TryParse(values[6], out parseInt))
+                    {
+                        gameResult.ShotsOffTarget = parseInt;
+                    }
+
+                    double possessionPercent;
+                    if (double.TryParse(values[7], out possessionPercent))
+                    {
+                        gameResult.PossessionPercent = possessionPercent;
+                    }
+
+                    SoccerResults.Add(gameResult);
                 }
             }
 
