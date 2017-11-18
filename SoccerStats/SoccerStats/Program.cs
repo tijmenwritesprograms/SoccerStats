@@ -15,16 +15,7 @@ namespace SoccerStats
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "SoccerGameResults.csv");
-
             var fileContents = ReadSoccerResults(fileName);
-        }
-
-        public static String ReadFile(String fileName)
-        {
-            using (var reader = new StreamReader(fileName))
-            {
-                return reader.ReadToEnd();
-            }
         }
 
         public static List<GameResult> ReadSoccerResults(String fileName)
